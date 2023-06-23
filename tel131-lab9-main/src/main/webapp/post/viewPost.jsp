@@ -25,6 +25,8 @@
     <div class="card">
         <div class="card-body">
             <h5 class="card-title h1"><%= post.getTitle()%></h5>
+            <h7 class="card-text"><%= post.getEmployee().getFirstName() + " " + post.getEmployee().getLastName()%></h7>
+            <p class="card-text"><%= post.getDatetime()%></p>
             <p class="card-text"><%= post.getContent()%></p>
         </div>
         <ul class="list-group list-group-flush">

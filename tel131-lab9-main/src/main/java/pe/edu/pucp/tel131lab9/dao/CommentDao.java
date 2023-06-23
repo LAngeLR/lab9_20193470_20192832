@@ -75,6 +75,6 @@ public class CommentDao extends DaoBase{
         comment.setEmployeeId(rs.getInt("c.employee_id"));
         comment.setPostId(rs.getInt("c.post_id"));
         comment.setComment(rs.getString("c.comment"));
-        comment.setDatetime(rs.getDate("c.datetime"));
+        comment.setDatetime(rs.getTimestamp("c.datetime"));
     }
 }
