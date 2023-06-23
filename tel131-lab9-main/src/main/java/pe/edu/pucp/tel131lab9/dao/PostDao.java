@@ -67,9 +67,11 @@ public class PostDao extends DaoBase{
     private void fetchPostData(Post post, ResultSet rs) throws SQLException {
         post.setPostId(rs.getInt(1));
         post.setTitle(rs.getString(2));
-        post.setDatetime(rs.getTimestamp(3));
-        post.setContent(rs.getString(4));
-        post.setEmployeeId(rs.getInt(5));
+
+        post.setContent(rs.getString(3));
+        post.setEmployeeId(rs.getInt(4));
+        post.setDatetime(rs.getTimestamp("p.datetime"));
+
 
         Employee employee = new Employee();
         employee.setEmployeeId(rs.getInt("e.employee_id"));
@@ -78,18 +80,35 @@ public class PostDao extends DaoBase{
         post.setEmployee(employee);
     }
 
-    public void anadirPost(String title, String content, Employee employee, Timestamp datetime) {
-        String query = "insert into post (title, content) values (?,?);";
+
+    public ArrayList<Post> buscarPost(String texto) {
+
+        ArrayList<Post> listaPost = new ArrayList<>();
+
+        String sql = "select * from post p left join employees e ON p.employee_id = e.employee_id \n" +
+                "where lower(p.title) like ?  or lower(p.content) like ?  or lower(e.first_name) like ? or lower(e.last_name) like ?";
 
         try (Connection conn = this.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            pstmt.setString(1, title);
-            pstmt.setString(2, content);
+            pstmt.setString(1, "%"+texto+"%");
+            pstmt.setString(2, "%"+texto+"%");
+            pstmt.setString(3, "%"+texto+"%");
+            pstmt.setString(4, "%"+texto+"%");
 
-        } catch (SQLException throwables) {
-            System.out.println("No se pudo realizar la actualización");
-            throwables.printStackTrace();
+            try (ResultSet rs = pstmt.executeQuery()) {
+
+                while (rs.next()) {
+                    Post post = new Post();
+                    fetchPostData(post, rs);
+
+                    listaPost.add(post);
+                }
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         }
+        return listaPost;
     }
+
 }

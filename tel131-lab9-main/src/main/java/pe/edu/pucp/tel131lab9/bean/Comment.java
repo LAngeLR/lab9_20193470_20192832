@@ -11,6 +11,13 @@ public class Comment {
     private Timestamp datetime;
 
 
+    public Timestamp getDatetime() {
+        return datetime;
+    }
+
+    public void setDatetime(Timestamp datetime) {
+        this.datetime = datetime;
+    }
 
     public int getCommentId() {
         return commentId;
@@ -44,11 +51,4 @@ public class Comment {
         this.comment = comment;
     }
 
-    public Timestamp getDatetime() {
-        return datetime;
-    }
-
-    public void setDatetime(Timestamp datetime) {
-        this.datetime = datetime;
-    }
 }

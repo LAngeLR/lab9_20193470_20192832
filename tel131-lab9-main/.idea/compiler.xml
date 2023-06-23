@@ -9,8 +9,5 @@
         <module name="tel131-lab9" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="tel131-lab9" target="11" />
-    </bytecodeTargetLevel>
   </component>
 </project>

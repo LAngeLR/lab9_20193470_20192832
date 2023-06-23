@@ -10,6 +10,16 @@ public class Post {
     private Employee employee;
     private Timestamp datetime;
 
+
+    public Timestamp getDatetime() {
+        return datetime;
+    }
+
+    public void setDatetime(Timestamp datetime) {
+        this.datetime = datetime;
+    }
+
+
     public Employee getEmployee() {
         return employee;
     }
@@ -51,11 +61,4 @@ public class Post {
     }
 
 
-    public Timestamp getDatetime() {
-        return datetime;
-    }
-
-    public void setDatetime(Timestamp datetime) {
-        this.datetime = datetime;
-    }
 }
