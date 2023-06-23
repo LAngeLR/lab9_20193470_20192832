@@ -14,7 +14,9 @@ public class PostDao extends DaoBase{
 
         ArrayList<Post> posts = new ArrayList<>();
 
-        String sql = "SELECT * FROM post left join employees e on e.employee_id = post.employee_id";
+        String sql = "SELECT p.post_id, p.title, concat (e.first_name,' ', e.last_name) as \"autor\", p.datetime as \"fecha\", p.content, \n" +
+                "p.employee_id, count(c.post_id) as \"cantidad de comentarios\" FROM comments c right join post p on c.post_id = p.post_id \n" +
+                "left join employees e on e.employee_id = p.employee_id group by p.post_id;";
 
         try (Connection conn = this.getConnection();
              Statement stmt = conn.createStatement();
@@ -65,8 +67,9 @@ public class PostDao extends DaoBase{
     private void fetchPostData(Post post, ResultSet rs) throws SQLException {
         post.setPostId(rs.getInt(1));
         post.setTitle(rs.getString(2));
-        post.setContent(rs.getString(3));
-        post.setEmployeeId(rs.getInt(4));
+        post.setDatetime(rs.getTimestamp(3));
+        post.setContent(rs.getString(4));
+        post.setEmployeeId(rs.getInt(5));
 
         Employee employee = new Employee();
         employee.setEmployeeId(rs.getInt("e.employee_id"));
@@ -75,4 +78,18 @@ public class PostDao extends DaoBase{
         post.setEmployee(employee);
     }
 
+    public void anadirPost(String title, String content, Employee employee, Timestamp datetime) {
+        String query = "insert into post (title, content) values (?,?);";
+
+        try (Connection conn = this.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            pstmt.setString(1, title);
+            pstmt.setString(2, content);
+
+        } catch (SQLException throwables) {
+            System.out.println("No se pudo realizar la actualización");
+            throwables.printStackTrace();
+        }
+    }
 }

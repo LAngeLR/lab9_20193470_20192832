@@ -1,21 +1,16 @@
 package pe.edu.pucp.tel131lab9.bean;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 public class Comment {
     private int commentId;
     private int postId;
     private int employeeId;
     private String comment;
-    private Date datetime;
+    private Timestamp datetime;
 
-    public Date getDatetime() {
-        return datetime;
-    }
 
-    public void setDatetime(Date datetime) {
-        this.datetime = datetime;
-    }
 
     public int getCommentId() {
         return commentId;
@@ -47,5 +42,13 @@ public class Comment {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public Timestamp getDatetime() {
+        return datetime;
+    }
+
+    public void setDatetime(Timestamp datetime) {
+        this.datetime = datetime;
     }
 }
